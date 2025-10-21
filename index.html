@@ -6,72 +6,87 @@
     <title>Smart To-Do & Habit Tracker</title>
     
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Smart Task Manager</h1>
-            <p>Organize your tasks and build lasting habits</p>
-        </header>
+        <!-- WHITEBOARD SURFACE -->
+        <div class="whiteboard-surface">
+            <div class="whiteboard-layout">
+                <!-- LEFT COLUMN: TO-DO LIST -->
+                <div id="todos-section" class="content-section active">
+                    <h2 class="section-title">To-Do List</h2>
+                    
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="total-tasks">0</div>
+                            <div class="stat-label">Total tasks</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="completed-tasks">0</div>
+                            <div class="stat-label">Completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="pending-tasks">0</div>
+                            <div class="stat-label">Pending</div>
+                        </div>
+                    </div>
 
-        <div class="tabs">
-            <button class="tab active" id="todos-tab">To-Do List</button>
-            <button class="tab" id="habits-tab">Habits</button>
+                    <div class="input-group">
+                        <input type="text" id="task-input" placeholder="What needs to be done?" />
+                        <input type="date" id="task-date" />
+                        <select id="task-priority">
+                            <option value="low">Low Priority</option>
+                            <option value="medium">Medium Priority</option>
+                            <option value="high">High Priority</option>
+                        </select>
+                        <button id="add-task-btn">Add Task</button>
+                    </div>
+
+                    <div class="items-list" id="tasks-list">
+                        <div class="empty-state">No tasks yet. Add one above!</div>
+                    </div>
+                </div>
+
+                <!-- VERTICAL DIVIDER -->
+                <div class="divider"></div>
+
+                <!-- RIGHT COLUMN: HABITS -->
+                <div id="habits-section" class="content-section active">
+                    <h2 class="section-title">Habits</h2>
+                    
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="total-habits">0</div>
+                            <div class="stat-label">Active habits</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="longest-streak">0</div>
+                            <div class="stat-label">Longest streak</div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" id="habit-input" placeholder="Enter a new habit to track..." />
+                        <button id="add-habit-btn">Add Habit</button>
+                    </div>
+
+                    <div class="items-list" id="habits-list">
+                        <div class="empty-state">No habits yet. Start building one!</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div id="todos-section" class="content-section active">
-
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number" id="total-tasks">0</div>
-                    <div class="stat-label">Total Tasks</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="completed-tasks">0</div>
-                    <div class="stat-label">Completed</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="pending-tasks">0</div>
-                    <div class="stat-label">Pending</div>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <input type="text" id="task-input" placeholder="What needs to be done?" />
-                <input type="date" id="task-date" />
-                <select id="task-priority">
-                    <option value="low">Low Priority</option>
-                    <option value="medium">Medium Priority</option>
-                    <option value="high">High Priority</option>
-                </select>
-                <button id="add-task-btn">Add Task</button>
-            </div>
-
-            <div class="items-list" id="tasks-list">
-                <div class="empty-state">No tasks yet. Add one above!</div>
-            </div>
-        </div>
-
-        <div id="habits-section" class="content-section">
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number" id="total-habits">0</div>
-                    <div class="stat-label">Active Habits</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="longest-streak">0</div>
-                    <div class="stat-label">Longest Streak</div>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <input type="text" id="habit-input" placeholder="Enter a new habit to track..." />
-                <button id="add-habit-btn">Add Habit</button>
-            </div>
-
-            <div class="items-list" id="habits-list">
-                <div class="empty-state">No habits yet. Start building one!</div>
-            </div>
+        <!-- BOTTOM MARKER TRAY -->
+        <div class="marker-tray">
+            <div class="marker marker-blue"></div>
+            <div class="marker marker-green"></div>
+            <div class="marker marker-red"></div>
+            <div class="marker marker-black"></div>
+            <div class="eraser"></div>
         </div>
     </div>
 
