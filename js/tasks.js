@@ -1,4 +1,5 @@
 let tasks = [];
+let currentCategoryFilter = 'all';
 
 function loadTasks() {
     const savedTasks = localStorage.getItem('tasks');
@@ -19,29 +20,32 @@ function addTask() {
         saveTaskEdit();
         return;
     }
-    
+
     const input = document.getElementById('task-input');
     const date = document.getElementById('task-date');
     const priority = document.getElementById('task-priority');
-    
+    const category = document.getElementById('task-category');
+
     if (input.value.trim() === '') {
         alert('Please enter a task!');
         return;
     }
-    
+
     const newTask = {
         id: Date.now(),
         text: input.value.trim(),
         date: date.value,
         priority: priority.value,
+        category: category.value,
         completed: false
     };
-    
+
     tasks.push(newTask);
     
     input.value = '';
     date.value = '';
     priority.value = 'low';
+    category.value = 'other';
     
     saveTasks();
     renderTasks();
@@ -75,6 +79,7 @@ function editTask(id) {
     document.getElementById('task-input').value = task.text;
     document.getElementById('task-date').value = task.date;
     document.getElementById('task-priority').value = task.priority;
+    document.getElementById('task-category').value = task.category || 'other';
     
     const addButton = document.getElementById('add-task-btn');
     addButton.textContent = 'Save Changes';
@@ -107,6 +112,7 @@ function saveTaskEdit() {
     const input = document.getElementById('task-input');
     const date = document.getElementById('task-date');
     const priority = document.getElementById('task-priority');
+    const category = document.getElementById('task-category'); 
     
     if (input.value.trim() === '') {
         alert('Please enter a task!');
@@ -118,6 +124,7 @@ function saveTaskEdit() {
         task.text = input.value.trim();
         task.date = date.value;
         task.priority = priority.value;
+        task.category = category.value;
     
         saveTasks();
         renderTasks();
@@ -132,6 +139,7 @@ function cancelTaskEdit() {
     document.getElementById('task-input').value = '';
     document.getElementById('task-date').value = '';
     document.getElementById('task-priority').value = 'low';
+    document.getElementById('task-category').value = 'other';
     
     const addButton = document.getElementById('add-task-btn');
     addButton.textContent = 'Add Task';
@@ -150,44 +158,76 @@ function cancelTaskEdit() {
     }
 }
 
+function filterByCategory(category) {
+    currentCategoryFilter = category;
+    
+    const filterButtons = document.querySelectorAll('.category-filter-btn');
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    
+    const activeButton = document.querySelector(`.category-filter-btn.${category}`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+    
+    renderTasks();
+}
+
 function renderTasks() {
     const tasksList = document.getElementById('tasks-list');
-    
+
+    let filteredTasks = tasks;
+    if (currentCategoryFilter !== 'all') {
+        filteredTasks = tasks.filter(t => t.category === currentCategoryFilter);
+    }
+
+    if (filteredTasks.length === 0 && currentCategoryFilter !== 'all') {
+        tasksList.innerHTML = `<div class="no-tasks-filtered">No ${currentCategoryFilter} tasks found.</div>`;
+        updateTaskStats();
+        return;
+    }
+
     if (tasks.length === 0) {
         tasksList.innerHTML = '<div class="empty-state">No tasks yet. Add one above!</div>';
         updateTaskStats();
         return;
     }
-    
+
     const priorityOrder = { high: 0, medium: 1, low: 2 };
-    const sortedTasks = [...tasks].sort((a, b) => {
+    const sortedTasks = [...filteredTasks].sort((a, b) => {
         return priorityOrder[a.priority] - priorityOrder[b.priority];
     });
-    
-    const tasksHTML = sortedTasks.map(task => `
-        <div class="item ${task.completed ? 'completed' : ''} priority-${task.priority}">
-            <input 
-                type="checkbox" 
-                class="item-checkbox" 
-                ${task.completed ? 'checked' : ''} 
-                onchange="toggleTask(${task.id})"
-            />
-            <div class="item-content">
-                <div class="item-title">${task.text}</div>
-                <div class="item-meta">
-                    <span class="priority-badge priority-${task.priority}">
-                        ${task.priority.toUpperCase()}
-                    </span>
-                    ${task.date ? `Due: ${formatDate(task.date)}` : 'No due date'}
+
+    const tasksHTML = sortedTasks.map(task => {
+        const categoryClass = task.category || 'other';
+        const categoryLabel = (task.category || 'other').charAt(0).toUpperCase() + (task.category || 'other').slice(1);
+        
+        return `
+            <div class="item ${task.completed ? 'completed' : ''} priority-${task.priority}">
+                <input 
+                    type="checkbox" 
+                    class="item-checkbox" 
+                    ${task.completed ? 'checked' : ''} 
+                    onchange="toggleTask(${task.id})"
+                />
+                <div class="item-content">
+                    <div class="item-title">${task.text}</div>
+                    <div class="item-meta">
+                        <span class="category-badge category-${categoryClass}">
+                            ${categoryLabel}
+                        </span>
+                        <span class="priority-badge priority-${task.priority}">
+                            ${task.priority.toUpperCase()}
+                        </span>
+                        ${task.date ? `Due: ${formatDate(task.date)}` : 'No due date'}
+                    </div>
                 </div>
+                <button class="edit-btn" onclick="editTask(${task.id})">Edit</button>
+                <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
             </div>
-            <button class="edit-btn" onclick="editTask(${task.id})">Edit</button>
-            <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
-        </div>
-    `).join('');
+        `;
+    }).join('');
     
     tasksList.innerHTML = tasksHTML;
-    
     updateTaskStats();
 }
 

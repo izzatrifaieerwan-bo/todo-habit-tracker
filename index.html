@@ -17,21 +17,34 @@
             <div class="whiteboard-layout">
                 <!-- LEFT COLUMN: TO-DO LIST -->
                 <div id="todos-section" class="content-section active">
-                    <h2 class="section-title">To-Do List</h2>
-                    
-                    <div class="stats">
-                        <div class="stat-card">
-                            <div class="stat-number" id="total-tasks">0</div>
-                            <div class="stat-label">Total tasks</div>
+                    <div class="section-header">
+                        <h2 class="section-title">To-Do List</h2>
+                        
+                        <div class="stats">
+                            <div class="stat-card">
+                                <div class="stat-number" id="total-tasks">0</div>
+                                <div class="stat-label">Total tasks</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="completed-tasks">0</div>
+                                <div class="stat-label">Completed</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="pending-tasks">0</div>
+                                <div class="stat-label">Pending</div>
+                            </div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="completed-tasks">0</div>
-                            <div class="stat-label">Completed</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="pending-tasks">0</div>
-                            <div class="stat-label">Pending</div>
-                        </div>
+                    </div>
+
+                    <div class="category-filters">
+                        <span class="filter-label">Filter:</span>
+                        <button class="category-filter-btn all active" onclick="filterByCategory('all')">All</button>
+                        <button class="category-filter-btn work" onclick="filterByCategory('work')">Work</button>
+                        <button class="category-filter-btn personal" onclick="filterByCategory('personal')">Personal</button>
+                        <button class="category-filter-btn shopping" onclick="filterByCategory('shopping')">Shopping</button>
+                        <button class="category-filter-btn school" onclick="filterByCategory('school')">School</button>
+                        <button class="category-filter-btn health" onclick="filterByCategory('health')">Health</button>
+                        <button class="category-filter-btn other" onclick="filterByCategory('other')">Other</button>
                     </div>
 
                     <div class="input-group">
@@ -41,6 +54,14 @@
                             <option value="low">Low Priority</option>
                             <option value="medium">Medium Priority</option>
                             <option value="high">High Priority</option>
+                        </select>
+                        <select id="task-category">
+                            <option value="other">Other</option>
+                            <option value="work">Work</option>
+                            <option value="personal">Personal</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="school">School</option>
+                            <option value="health">Health</option>
                         </select>
                         <button id="add-task-btn">Add Task</button>
                     </div>
@@ -55,16 +76,18 @@
 
                 <!-- RIGHT COLUMN: HABITS -->
                 <div id="habits-section" class="content-section active">
-                    <h2 class="section-title">Habits</h2>
-                    
-                    <div class="stats">
-                        <div class="stat-card">
-                            <div class="stat-number" id="total-habits">0</div>
-                            <div class="stat-label">Active habits</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="longest-streak">0</div>
-                            <div class="stat-label">Longest streak</div>
+                    <div class="section-header">
+                        <h2 class="section-title">Habits</h2>
+                        
+                        <div class="stats">
+                            <div class="stat-card">
+                                <div class="stat-number" id="total-habits">0</div>
+                                <div class="stat-label">Active habits</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="longest-streak">0</div>
+                                <div class="stat-label">Longest streak</div>
+                            </div>
                         </div>
                     </div>
 
