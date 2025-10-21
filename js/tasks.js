@@ -1,5 +1,6 @@
 let tasks = [];
 let currentCategoryFilter = 'all';
+let searchTerm = '';
 
 function loadTasks() {
     const savedTasks = localStorage.getItem('tasks');
@@ -180,29 +181,60 @@ function renderTasks() {
         filteredTasks = tasks.filter(t => t.category === currentCategoryFilter);
     }
 
+    if (searchTerm !== '') {
+        filteredTasks = filteredTasks.filter(t => 
+            t.text.toLowerCase().includes(searchTerm)
+        );
+    }
+
+    if (filteredTasks.length === 0 && searchTerm !== '') {
+        tasksList.innerHTML = `<div class="no-search-results">No tasks found matching "${searchTerm}"</div>`;
+        updateTaskStats();
+        return;
+    }
+    
     if (filteredTasks.length === 0 && currentCategoryFilter !== 'all') {
         tasksList.innerHTML = `<div class="no-tasks-filtered">No ${currentCategoryFilter} tasks found.</div>`;
         updateTaskStats();
         return;
     }
-
+    
     if (tasks.length === 0) {
         tasksList.innerHTML = '<div class="empty-state">No tasks yet. Add one above!</div>';
+        updateTaskStats();
+        return;
+    }
+    
+    if (filteredTasks.length === 0) {
+        tasksList.innerHTML = '<div class="no-search-results">No matching tasks found.</div>';
         updateTaskStats();
         return;
     }
 
     const priorityOrder = { high: 0, medium: 1, low: 2 };
     const sortedTasks = [...filteredTasks].sort((a, b) => {
+        const aOverdue = isTaskOverdue(a);
+        const bOverdue = isTaskOverdue(b);
+        
+        if (aOverdue && !bOverdue) return -1;
+        if (!aOverdue && bOverdue) return 1;
+        
         return priorityOrder[a.priority] - priorityOrder[b.priority];
     });
-
+    
     const tasksHTML = sortedTasks.map(task => {
         const categoryClass = task.category || 'other';
         const categoryLabel = (task.category || 'other').charAt(0).toUpperCase() + (task.category || 'other').slice(1);
+        const overdue = isTaskOverdue(task);
+    
+        let displayText = task.text;
+        if (searchTerm !== '') {
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            displayText = task.text.replace(regex, '<span class="search-highlight">$1</span>');
+        }
         
         return `
-            <div class="item ${task.completed ? 'completed' : ''} priority-${task.priority}">
+            <div class="item ${task.completed ? 'completed' : ''} ${overdue ? 'overdue' : ''} priority-${task.priority}">
                 <input 
                     type="checkbox" 
                     class="item-checkbox" 
@@ -210,8 +242,9 @@ function renderTasks() {
                     onchange="toggleTask(${task.id})"
                 />
                 <div class="item-content">
-                    <div class="item-title">${task.text}</div>
+                    <div class="item-title">${displayText}</div>
                     <div class="item-meta">
+                        ${overdue ? '<span class="overdue-badge">OVERDUE</span>' : ''}
                         <span class="category-badge category-${categoryClass}">
                             ${categoryLabel}
                         </span>
@@ -248,4 +281,42 @@ function formatDate(dateString) {
         day: 'numeric', 
         year: 'numeric' 
     });
+}
+
+function isTaskOverdue(task) {
+    if (!task.date || task.completed) {
+        return false;  
+    }
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const dueDate = new Date(task.date);
+    dueDate.setHours(0, 0, 0, 0);
+    
+    return dueDate < today;  
+}
+
+function searchTasks() {
+    const searchInput = document.getElementById('search-input');
+    const clearBtn = document.getElementById('clear-search-btn');
+    
+    searchTerm = searchInput.value.toLowerCase().trim();
+
+    clearBtn.disabled = searchTerm === '';
+
+    renderTasks();
+}
+
+function clearSearch() {
+    const searchInput = document.getElementById('search-input');
+    const clearBtn = document.getElementById('clear-search-btn');
+    
+    searchInput.value = '';
+    searchTerm = '';
+    clearBtn.disabled = true;
+
+    renderTasks();
+
+    searchInput.focus();
 }

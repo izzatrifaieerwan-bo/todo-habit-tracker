@@ -47,6 +47,19 @@
                         <button class="category-filter-btn other" onclick="filterByCategory('other')">Other</button>
                     </div>
 
+                    <div class="search-container">
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            class="search-input" 
+                            placeholder="🔍 Search tasks..." 
+                            oninput="searchTasks()"
+                        />
+                        <button class="clear-search-btn" id="clear-search-btn" onclick="clearSearch()" disabled>
+                            Clear
+                        </button>
+                    </div>
+
                     <div class="input-group">
                         <input type="text" id="task-input" placeholder="What needs to be done?" />
                         <input type="date" id="task-date" />
