@@ -18,6 +18,8 @@ function setupEventListeners() {
 
 function initApp() {
     console.log('Whiteboard app starting...');
+
+    loadTheme();
     
     loadTasks();
     loadHabits();
@@ -26,5 +28,27 @@ function initApp() {
     
     console.log('Whiteboard ready!');
 }
+
+function toggleTheme() {
+    const body = document.body;
+    const isDark = body.classList.contains('dark-theme');
+    
+    if (isDark) {
+        body.classList.remove('dark-theme');
+        localStorage.setItem('theme', 'light');
+    } else {
+        body.classList.add('dark-theme');
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+}
+loadTheme();
 
 document.addEventListener('DOMContentLoaded', initApp);
