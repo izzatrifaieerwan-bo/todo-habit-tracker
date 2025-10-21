@@ -273,6 +273,54 @@ button:hover {
     font-size: 1.1em;       
 }
 
+.edit-btn {
+    padding: 8px 16px;      
+    background: #3498db;   
+    font-size: 0.9em;       
+    margin-right: 10px;     
+}
+
+.edit-btn:hover {
+    background: #2980b9;   
+}
+
+.input-group.edit-mode {
+    background: #fff3cd;    
+    padding: 20px;          
+    border-radius: 10px;    
+    border: 2px solid #ffc107;
+}
+
+.edit-mode-label {
+    display: none;          
+    color: #856404;        
+    font-weight: bold;      
+    margin-bottom: 10px;    
+    font-size: 0.95em;      
+}
+
+.input-group.edit-mode .edit-mode-label {
+    display: block;         
+}
+
+.input-group.edit-mode button {
+    background: #28a745;    
+}
+
+.input-group.edit-mode button:hover {
+    background: #218838;    
+}
+
+.cancel-btn {
+    padding: 12px 24px;     
+    background: #6c757d;   
+    color: white;          
+}
+
+.cancel-btn:hover {
+    background: #5a6268;   
+}
+
 @media (max-width: 768px) {
     header h1 {
         font-size: 1.8em;   

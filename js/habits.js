@@ -15,18 +15,23 @@ function saveHabits() {
 }
 
 function addHabit() {
+    if (editingHabitId !== null) {
+        saveHabitEdit();
+        return;
+    }
+    
     const input = document.getElementById('habit-input');
     
     if (input.value.trim() === '') {
         alert('Please enter a habit!');
-        return; 
+        return;
     }
     
     const newHabit = {
-        id: Date.now(),              
-        text: input.value.trim(),    
-        streak: 0,                   
-        lastChecked: null            
+        id: Date.now(),
+        text: input.value.trim(),
+        streak: 0,
+        lastChecked: null
     };
     
     habits.push(newHabit);
@@ -76,6 +81,84 @@ function deleteHabit(id) {
     renderHabits();
 }
 
+let editingHabitId = null;  
+
+function editHabit(id) {
+    const habit = habits.find(h => h.id === id);
+    if (!habit) return;
+    
+    editingHabitId = id;
+    
+    document.getElementById('habit-input').value = habit.text;
+    
+    const addButton = document.getElementById('add-habit-btn');
+    addButton.textContent = 'Save Changes';
+    
+    const inputGroup = document.querySelector('#habits-section .input-group');
+    inputGroup.classList.add('edit-mode');
+    
+    if (!document.getElementById('cancel-habit-btn')) {
+        const cancelBtn = document.createElement('button');
+        cancelBtn.id = 'cancel-habit-btn';
+        cancelBtn.className = 'cancel-btn';
+        cancelBtn.textContent = 'Cancel';
+        cancelBtn.onclick = cancelHabitEdit;
+        inputGroup.appendChild(cancelBtn);
+    }
+    
+    if (!document.querySelector('#habits-section .edit-mode-label')) {
+        const label = document.createElement('div');
+        label.className = 'edit-mode-label';
+        label.textContent = '✏️ Editing Habit';
+        inputGroup.insertBefore(label, inputGroup.firstChild);
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    document.getElementById('habit-input').focus();
+}
+
+function saveHabitEdit() {
+    const input = document.getElementById('habit-input');
+    
+    if (input.value.trim() === '') {
+        alert('Please enter a habit!');
+        return;
+    }
+    
+    const habit = habits.find(h => h.id === editingHabitId);
+    if (habit) {
+        habit.text = input.value.trim();
+
+        saveHabits();
+        renderHabits();
+    }
+    
+    cancelHabitEdit();
+}
+
+function cancelHabitEdit() {
+    editingHabitId = null;
+    
+    document.getElementById('habit-input').value = '';
+    
+    const addButton = document.getElementById('add-habit-btn');
+    addButton.textContent = 'Add Habit';
+    
+    const inputGroup = document.querySelector('#habits-section .input-group');
+    inputGroup.classList.remove('edit-mode');
+    
+    const cancelBtn = document.getElementById('cancel-habit-btn');
+    if (cancelBtn) {
+        cancelBtn.remove();
+    }
+    
+    const label = document.querySelector('#habits-section .edit-mode-label');
+    if (label) {
+        label.remove();
+    }
+}
+
 function renderHabits() {
     const habitsList = document.getElementById('habits-list');
 
@@ -112,6 +195,7 @@ function renderHabits() {
                         <div class="streak-label">day streak</div>
                     </div>
                 </div>
+                <button class="edit-btn" onclick="editHabit(${habit.id})">Edit</button>
                 <button class="delete-btn" onclick="deleteHabit(${habit.id})">Delete</button>
             </div>
         `;

@@ -15,20 +15,26 @@ function saveTasks() {
 }
 
 function addTask() {
+    if (editingTaskId !== null) {
+        saveTaskEdit();
+        return;
+    }
+    
     const input = document.getElementById('task-input');
     const date = document.getElementById('task-date');
     const priority = document.getElementById('task-priority');
+    
     if (input.value.trim() === '') {
         alert('Please enter a task!');
-        return;  
+        return;
     }
-
+    
     const newTask = {
-        id: Date.now(),              
-        text: input.value.trim(),    
-        date: date.value,            
-        priority: priority.value,    
-        completed: false             
+        id: Date.now(),
+        text: input.value.trim(),
+        date: date.value,
+        priority: priority.value,
+        completed: false
     };
     
     tasks.push(newTask);
@@ -56,6 +62,92 @@ function deleteTask(id) {
     
     saveTasks();
     renderTasks();
+}
+
+let editingTaskId = null;  
+
+function editTask(id) {
+    const task = tasks.find(t => t.id === id);
+    if (!task) return;
+    
+    editingTaskId = id;
+    
+    document.getElementById('task-input').value = task.text;
+    document.getElementById('task-date').value = task.date;
+    document.getElementById('task-priority').value = task.priority;
+    
+    const addButton = document.getElementById('add-task-btn');
+    addButton.textContent = 'Save Changes';
+    
+    const inputGroup = document.querySelector('#todos-section .input-group');
+    inputGroup.classList.add('edit-mode');
+    
+    if (!document.getElementById('cancel-task-btn')) {
+        const cancelBtn = document.createElement('button');
+        cancelBtn.id = 'cancel-task-btn';
+        cancelBtn.className = 'cancel-btn';
+        cancelBtn.textContent = 'Cancel';
+        cancelBtn.onclick = cancelTaskEdit;
+        inputGroup.appendChild(cancelBtn);
+    }
+    
+    if (!document.querySelector('#todos-section .edit-mode-label')) {
+        const label = document.createElement('div');
+        label.className = 'edit-mode-label';
+        label.textContent = '✏️ Editing Task';
+        inputGroup.insertBefore(label, inputGroup.firstChild);
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    document.getElementById('task-input').focus();
+}
+
+function saveTaskEdit() {
+    const input = document.getElementById('task-input');
+    const date = document.getElementById('task-date');
+    const priority = document.getElementById('task-priority');
+    
+    if (input.value.trim() === '') {
+        alert('Please enter a task!');
+        return;
+    }
+    
+    const task = tasks.find(t => t.id === editingTaskId);
+    if (task) {
+        task.text = input.value.trim();
+        task.date = date.value;
+        task.priority = priority.value;
+    
+        saveTasks();
+        renderTasks();
+    }
+    
+    cancelTaskEdit();
+}
+
+function cancelTaskEdit() {
+    editingTaskId = null;
+    
+    document.getElementById('task-input').value = '';
+    document.getElementById('task-date').value = '';
+    document.getElementById('task-priority').value = 'low';
+    
+    const addButton = document.getElementById('add-task-btn');
+    addButton.textContent = 'Add Task';
+    
+    const inputGroup = document.querySelector('#todos-section .input-group');
+    inputGroup.classList.remove('edit-mode');
+    
+    const cancelBtn = document.getElementById('cancel-task-btn');
+    if (cancelBtn) {
+        cancelBtn.remove();
+    }
+    
+    const label = document.querySelector('#todos-section .edit-mode-label');
+    if (label) {
+        label.remove();
+    }
 }
 
 function renderTasks() {
@@ -89,6 +181,7 @@ function renderTasks() {
                     ${task.date ? `Due: ${formatDate(task.date)}` : 'No due date'}
                 </div>
             </div>
+            <button class="edit-btn" onclick="editTask(${task.id})">Edit</button>
             <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
         </div>
     `).join('');
