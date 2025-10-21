@@ -1,4 +1,4 @@
-# 📋 Smart To-Do & Habit Tracker
+# Smart To-Do & Habit Tracker
 
 A modern, responsive web application for managing tasks and building lasting habits. Features priority management, due dates, and streak tracking to help you stay organized and motivated.
 
