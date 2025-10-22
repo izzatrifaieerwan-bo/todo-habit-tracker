@@ -40,6 +40,11 @@ function toggleTheme() {
         body.classList.add('dark-theme');
         localStorage.setItem('theme', 'dark');
     }
+    
+    // Update dashboard charts with new theme colors
+    if (typeof updateDashboardTheme === 'function') {
+        updateDashboardTheme();
+    }
 }
 
 function loadTheme() {
