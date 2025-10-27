@@ -40,6 +40,8 @@ function addHabit() {
     
     saveHabits();
     renderHabits();
+
+    successToast('Habit added! 🔥');
 }
 
 function checkHabit(id) {
@@ -72,6 +74,13 @@ function checkHabit(id) {
     
     saveHabits();
     renderHabits();
+
+    // Show toast based on action
+    if (habit.lastChecked === today) {
+        successToast(`${habit.streak} day streak! Keep it up! 🔥`);
+    } else {
+        infoToast('Streak reset');
+    }
 }
 
 function deleteHabit(id) {
@@ -79,6 +88,8 @@ function deleteHabit(id) {
     
     saveHabits();
     renderHabits();
+    
+    infoToast('Habit deleted');
 }
 
 let editingHabitId = null;  
@@ -102,7 +113,10 @@ function editHabit(id) {
         cancelBtn.id = 'cancel-habit-btn';
         cancelBtn.className = 'cancel-btn';
         cancelBtn.textContent = 'Cancel';
-        cancelBtn.onclick = cancelHabitEdit;
+        cancelBtn.onclick = function() {
+            cancelHabitEdit();
+            infoToast('Edit cancelled');  // ← Show toast when cancel is clicked
+        };
         inputGroup.appendChild(cancelBtn);
     }
     
@@ -135,6 +149,8 @@ function saveHabitEdit() {
     }
     
     cancelHabitEdit();
+
+    successToast('Habit updated! ✏️');
 }
 
 function cancelHabitEdit() {

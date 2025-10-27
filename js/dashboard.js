@@ -23,6 +23,8 @@ function toggleDashboard() {
         
         // Update charts when opening
         updateDashboard();
+
+        infoToast('Dashboard opened 📊');
     }
 }
 

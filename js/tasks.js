@@ -107,21 +107,31 @@ function addTask() {
     saveTasks();
     renderTasks();
     updateDashboardIfOpen(); // ← NEW: Update dashboard in real-time
+
+    successToast('Task added successfully! 📝');
 }
 
 // ================================
 // TOGGLE TASK COMPLETION
 // ================================
 function toggleTask(id) {
-    // Find the task by ID
     const task = tasks.find(t => t.id === id);
     
-    // If task exists, toggle its completed status
     if (task) {
+        // Check status before toggling for toast message
+        const wasCompleted = task.completed;
+        
         task.completed = !task.completed;
         saveTasks();
         renderTasks();
-        updateDashboardIfOpen(); // ← NEW: Update dashboard in real-time
+        updateDashboardIfOpen();
+        
+        // Show appropriate toast
+        if (!wasCompleted) {
+            successToast('Task completed! 🎉');
+        } else {
+            infoToast('Task marked as incomplete');
+        }
     }
 }
 
@@ -135,6 +145,8 @@ function deleteTask(id) {
     saveTasks();
     renderTasks();
     updateDashboardIfOpen(); // ← NEW: Update dashboard in real-time
+
+    infoToast('Task deleted');
 }
 
 // ================================
@@ -168,7 +180,10 @@ function editTask(id) {
         cancelBtn.id = 'cancel-task-btn';
         cancelBtn.className = 'cancel-btn';
         cancelBtn.textContent = 'Cancel';
-        cancelBtn.onclick = cancelTaskEdit;
+        cancelBtn.onclick = function() {
+            cancelTaskEdit();
+            infoToast('Edit cancelled');  // ← Show toast when cancel is clicked
+        };
         inputGroup.appendChild(cancelBtn);
     }
     
@@ -214,11 +229,14 @@ function saveTaskEdit() {
         // Save and render
         saveTasks();
         renderTasks();
-        updateDashboardIfOpen(); // ← NEW: Update dashboard in real-time
+        updateDashboardIfOpen();
     }
     
-    // Exit edit mode
+    // Exit edit mode (this calls cancelTaskEdit)
     cancelTaskEdit();
+    
+    // Show success toast AFTER canceling edit mode
+    successToast('Changes saved! ✏️');
 }
 
 // ================================
@@ -515,6 +533,7 @@ function toggleDragMode() {
         if (customOrder.length === 0) {
             customOrder = tasks.map(t => t.id);
         }
+        infoToast('Drag mode enabled ⋮⋮');
     } else {
         toggle.classList.remove('active');
         container.classList.remove('active');
@@ -523,6 +542,8 @@ function toggleDragMode() {
         // Clear custom order to return to automatic sorting
         customOrder = [];
         localStorage.removeItem('customTaskOrder');
+
+        infoToast('Auto-sort enabled');
     }
     
     // Re-render with new mode
