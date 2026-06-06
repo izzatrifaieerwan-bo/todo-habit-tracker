@@ -139,14 +139,17 @@ function toggleTask(id) {
 // DELETE A TASK
 // ================================
 function deleteTask(id) {
-    // Filter out the task with matching ID (keep all others)
-    tasks = tasks.filter(t => t.id !== id);
-    
-    saveTasks();
-    renderTasks();
-    updateDashboardIfOpen(); // ← NEW: Update dashboard in real-time
-
-    infoToast('Task deleted');
+    const itemEl = document.querySelector(`.item[data-id="${id}"]`);
+    if (itemEl && !itemEl.classList.contains('exiting')) {
+        itemEl.classList.add('exiting');
+        infoToast('Task deleted');
+        setTimeout(() => {
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasks();
+            renderTasks();
+            updateDashboardIfOpen();
+        }, 270);
+    }
 }
 
 // ================================
@@ -424,7 +427,12 @@ function renderTasks() {
 
     // Insert HTML into the page
     tasksList.innerHTML = tasksHTML;
-    
+
+    // Stagger chalk-write-in animation delays
+    tasksList.querySelectorAll('.item').forEach((el, i) => {
+        el.style.animationDelay = `${Math.min(i * 50, 500)}ms`;
+    });
+
     // Update statistics
     updateTaskStats();
 
