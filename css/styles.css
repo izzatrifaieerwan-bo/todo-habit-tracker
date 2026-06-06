@@ -828,13 +828,20 @@ body.dark-theme button:hover {
     border: none;
     border-left: 3px solid #4A90E2;
     padding-left: 15px;
-    transition: all 0.3s ease;
+    transition: background 0.15s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
     box-shadow: none;
+    animation: chalk-write-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .item:hover {
     background: rgba(74, 144, 226, 0.05);
     transform: translateX(3px);
+}
+
+.item.exiting {
+    animation: chalk-erase-out 0.25s cubic-bezier(0.55, 0, 1, 0.45) both;
+    pointer-events: none;
 }
 
 body.dark-theme .item {
@@ -1918,6 +1925,7 @@ body.dark-theme .heatmap-legend-cell.completed {
     background: rgba(80, 200, 120, 0.15);
     cursor: default;
     transition: transform 0.1s ease, background 0.6s ease;
+    animation: heatmap-fade 0.15s ease-out both;
 }
 
 .heatmap-cell:hover {
@@ -1951,4 +1959,35 @@ body.dark-theme .heatmap-cell.today {
         flex-direction: column;
         align-items: flex-start;
     }
+}
+
+/* ================================
+   CHALK ANIMATIONS
+   ================================ */
+
+@keyframes chalk-write-in {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes chalk-erase-out {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+}
+
+@keyframes heatmap-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
