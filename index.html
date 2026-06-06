@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
 </head>
-<body>
+<body class="dark-theme">
     <div class="container">
         <!-- WHITEBOARD SURFACE -->
         <div class="whiteboard-surface">
@@ -43,6 +43,7 @@
                     </button>
 
                     <div class="dashboard-panel" id="dashboard-panel">
+                        <div class="dashboard-panel-inner">
                         <div class="dashboard-header">
                             <h3>Task Statistics Dashboard</h3>
                         </div>
@@ -71,8 +72,9 @@
                                 <h4>Task Status Overview</h4>
                                 <canvas id="statusChart"></canvas>
                             </div>
-                        </div>
-                    </div>
+                        </div><!-- end charts-grid -->
+                        </div><!-- end dashboard-panel-inner -->
+                    </div><!-- end dashboard-panel -->
 
                     <div class="category-filters">
                         <span class="filter-label">Filter:</span>
