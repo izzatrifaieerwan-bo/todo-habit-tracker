@@ -49,11 +49,11 @@ function toggleTheme() {
 
 function loadTheme() {
     const savedTheme = localStorage.getItem('theme');
-    
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
+    if (savedTheme === 'light') {
+        document.body.classList.remove('dark-theme');
     }
+    // dark-theme class is already on <body> in index.html
+    // Only remove it if the user explicitly saved 'light'
 }
-loadTheme();
 
 document.addEventListener('DOMContentLoaded', initApp);

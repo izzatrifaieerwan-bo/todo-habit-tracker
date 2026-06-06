@@ -10,36 +10,36 @@
 
 /* Theme CSS Variables */
 :root {
-    --wall-color-1: #8B7355;
-    --wall-color-2: #6B5444;
-    --board-color-1: #fefefe;
-    --board-color-2: #f8f8f8;
-    --frame-color-1: #e0e0e0;
-    --frame-color-2: #d0d0d0;
-    --frame-color-3: #c8c8c8;
-    --tray-color-1: #c8c8c8;
-    --tray-color-2: #b8b8b8;
-    --text-color: #2c3e50;
-    --text-secondary: #666;
-    --divider-color: #4A90E2;
-    --input-border: #4A90E2;
+    --wall-color-1: #7a5c3a;
+    --wall-color-2: #5a3f25;
+    --board-color-1: #f5f0e8;
+    --board-color-2: #ede8de;
+    --frame-color-1: #a07840;
+    --frame-color-2: #8B6914;
+    --frame-color-3: #7a5a10;
+    --tray-color-1: #b89060;
+    --tray-color-2: #a07840;
+    --text-color: #2c1f0e;
+    --text-secondary: #7a5a3a;
+    --divider-color: #8B6914;
+    --input-border: #8B6914;
     --eraser-color-1: #333;
     --eraser-color-2: #2a2a2a;
 }
 
 /* Dark Theme (Chalkboard) */
 body.dark-theme {
-    --wall-color-1: #1a1a1a;
-    --wall-color-2: #0d0d0d;
-    --board-color-1: #2d4a2b;
-    --board-color-2: #1f3a1f;
-    --frame-color-1: #4a4a4a;
-    --frame-color-2: #3a3a3a;
-    --frame-color-3: #2a2a2a;
-    --tray-color-1: #4a4a4a;
-    --tray-color-2: #3a3a3a;
+    --wall-color-1: #0f1a0f;
+    --wall-color-2: #080f08;
+    --board-color-1: #1a3320;
+    --board-color-2: #152a1a;
+    --frame-color-1: #3d2b1f;
+    --frame-color-2: #2d1f14;
+    --frame-color-3: #1f160e;
+    --tray-color-1: #3d2b1f;
+    --tray-color-2: #2d1f14;
     --text-color: #e8e8d0;
-    --text-secondary: #c8c8b0;
+    --text-secondary: #a8a898;
     --divider-color: #e8e8d0;
     --input-border: #c8c8b0;
     --eraser-color-1: #f5f5f5;
@@ -87,20 +87,20 @@ body::before {
 }
 
 body.dark-theme::before {
-    background-image: 
+    background-image:
         repeating-linear-gradient(
             90deg,
-            rgba(255,255,255,0.02) 0px,
+            rgba(255,255,255,0.04) 0px,
             transparent 1px,
             transparent 40px,
-            rgba(255,255,255,0.02) 41px
+            rgba(255,255,255,0.04) 41px
         ),
         repeating-linear-gradient(
             0deg,
-            rgba(255,255,255,0.02) 0px,
+            rgba(255,255,255,0.04) 0px,
             transparent 1px,
             transparent 40px,
-            rgba(255,255,255,0.02) 41px
+            rgba(255,255,255,0.04) 41px
         );
 }
 
@@ -135,9 +135,17 @@ body.dark-theme::before {
 .whiteboard-surface {
     width: 100%;
     height: calc(100% - 44px);
-    background: linear-gradient(135deg, var(--board-color-1) 0%, var(--board-color-2) 100%);
+    background:
+        repeating-linear-gradient(
+            180deg,
+            transparent 0px,
+            transparent 27px,
+            rgba(0,0,0,0.04) 27px,
+            rgba(0,0,0,0.04) 28px
+        ),
+        linear-gradient(135deg, var(--board-color-1) 0%, var(--board-color-2) 100%);
     border-radius: 6px 6px 0 0;
-    box-shadow: 
+    box-shadow:
         inset 0 0 100px rgba(0, 0, 0, 0.02),
         inset 0 1px 2px rgba(255, 255, 255, 0.8);
     position: relative;
@@ -147,7 +155,8 @@ body.dark-theme::before {
 }
 
 body.dark-theme .whiteboard-surface {
-    box-shadow: 
+    background: linear-gradient(135deg, var(--board-color-1) 0%, var(--board-color-2) 100%);
+    box-shadow:
         inset 0 0 100px rgba(0, 0, 0, 0.3),
         inset 0 1px 2px rgba(255, 255, 255, 0.05);
 }
@@ -180,7 +189,7 @@ body.dark-theme .whiteboard-surface::after {
     bottom: 0;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.05"/></svg>');
     pointer-events: none;
-    opacity: 0.3;
+    opacity: 0.5;
 }
 
 /* BOTTOM MARKER TRAY */
@@ -349,11 +358,12 @@ header {
 }
 
 .section-title {
-    font-size: 2.8em;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
     font-weight: 700;
     color: var(--text-color);
     margin: 0;
-    font-family: 'Caveat', cursive;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
     position: relative;
     display: inline-block;
     transition: color 0.6s ease;
@@ -421,16 +431,16 @@ body.dark-theme #habits-section .section-title::after {
     font-size: 1.4em;
     font-weight: 700;
     margin: 0;
-    font-family: 'Caveat', cursive;
+    font-family: 'Space Grotesk', sans-serif;
     transition: color 0.6s ease;
 }
 
 .stat-label {
-    font-size: 1em;
-    font-weight: 400;
-    text-transform: none;
-    letter-spacing: 0;
-    font-family: 'Caveat', cursive;
+    font-size: 0.7em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'Space Grotesk', sans-serif;
     color: var(--text-secondary);
     transition: color 0.6s ease;
 }
@@ -509,6 +519,7 @@ body.dark-theme .search-input:focus {
     font-family: 'Caveat', cursive;
     box-shadow: 0 2px 6px rgba(149, 165, 166, 0.3);
     transition: all 0.2s ease;
+    text-transform: none;
 }
 
 .clear-search-btn:hover {
@@ -535,25 +546,29 @@ body.dark-theme .search-input:focus {
 }
 
 .filter-label {
-    font-size: 1.1em;
+    font-size: 0.75em;
     color: var(--text-secondary);
-    font-weight: 600;
-    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     margin-right: 5px;
     transition: color 0.6s ease;
 }
 
 .category-filter-btn {
-    padding: 6px 14px;
+    padding: 5px 12px;
     background: rgba(74, 144, 226, 0.1);
     color: #4A90E2;
     border: 2px solid #4A90E2;
     border-radius: 20px;
-    font-size: 0.95em;
-    font-weight: 600;
+    font-size: 0.72em;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Caveat', cursive;
+    transition: all 0.15s cubic-bezier(0.22, 1, 0.36, 1);
     box-shadow: none;
 }
 
@@ -764,11 +779,13 @@ button {
     color: white;
     border: none;
     border-radius: 6px;
-    font-size: 1.1em;
+    font-size: 0.9em;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'Caveat', cursive;
+    transition: all 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     box-shadow: 0 3px 8px rgba(74, 144, 226, 0.3);
 }
 
@@ -776,6 +793,7 @@ button:hover {
     background: #357ABD;
     transform: translateY(-2px);
     box-shadow: 0 5px 12px rgba(74, 144, 226, 0.4);
+    transition: all 0.15s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 button:active {
@@ -811,13 +829,20 @@ body.dark-theme button:hover {
     border: none;
     border-left: 3px solid #4A90E2;
     padding-left: 15px;
-    transition: all 0.3s ease;
+    transition: background 0.15s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
     box-shadow: none;
+    animation: chalk-write-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .item:hover {
     background: rgba(74, 144, 226, 0.05);
     transform: translateX(3px);
+}
+
+.item.exiting {
+    animation: chalk-erase-out 0.25s cubic-bezier(0.55, 0, 1, 0.45) both;
+    pointer-events: none;
 }
 
 body.dark-theme .item {
@@ -1284,14 +1309,13 @@ body.dark-theme .dashboard-toggle-btn:hover {
 
 /* Dashboard Panel */
 .dashboard-panel {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    margin-bottom: 0;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease, margin-bottom 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     background: rgba(255, 255, 255, 0.5);
     border-radius: 12px;
-    transition: all 0.4s ease;
     border: 2px solid transparent;
+    overflow: hidden;
 }
 
 body.dark-theme .dashboard-panel {
@@ -1299,10 +1323,8 @@ body.dark-theme .dashboard-panel {
 }
 
 .dashboard-panel.open {
-    max-height: 2000px;
-    opacity: 1;
+    grid-template-rows: 1fr;
     margin-bottom: 25px;
-    padding: 25px;
     border-color: #9b59b6;
     box-shadow: 0 8px 25px rgba(155, 89, 182, 0.2);
 }
@@ -1310,6 +1332,17 @@ body.dark-theme .dashboard-panel {
 body.dark-theme .dashboard-panel.open {
     border-color: var(--text-secondary);
     box-shadow: 0 8px 25px rgba(232, 232, 208, 0.1);
+}
+
+.dashboard-panel-inner {
+    min-height: 0;
+    overflow: hidden;
+    padding: 0;
+    transition: padding 0.3s ease 0.05s;
+}
+
+.dashboard-panel.open .dashboard-panel-inner {
+    padding: 25px;
 }
 
 /* Dashboard Header */
@@ -1327,10 +1360,11 @@ body.dark-theme .dashboard-header {
 }
 
 .dashboard-header h3 {
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: 700;
     color: var(--text-color);
-    font-family: 'Caveat', cursive;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
     margin: 0;
 }
 
@@ -1364,10 +1398,12 @@ body.dark-theme .chart-container:hover {
 }
 
 .chart-container h4 {
-    font-size: 1.4em;
-    font-weight: 600;
+    font-size: 0.85em;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--text-color);
-    font-family: 'Caveat', cursive;
     margin: 0 0 15px 0;
     text-align: center;
 }
@@ -1423,10 +1459,12 @@ body.dark-theme .drag-toggle-container.active {
 
 .drag-toggle-label {
     flex: 1;
-    font-size: 1.1em;
-    font-weight: 600;
+    font-size: 0.85em;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--text-color);
-    font-family: 'Caveat', cursive;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -1896,6 +1934,7 @@ body.dark-theme .heatmap-legend-cell.completed {
     background: rgba(80, 200, 120, 0.15);
     cursor: default;
     transition: transform 0.1s ease, background 0.6s ease;
+    animation: heatmap-fade 0.15s ease-out both;
 }
 
 .heatmap-cell:hover {
@@ -1929,4 +1968,35 @@ body.dark-theme .heatmap-cell.today {
         flex-direction: column;
         align-items: flex-start;
     }
+}
+
+/* ================================
+   CHALK ANIMATIONS
+   ================================ */
+
+@keyframes chalk-write-in {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes chalk-erase-out {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+}
+
+@keyframes heatmap-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }

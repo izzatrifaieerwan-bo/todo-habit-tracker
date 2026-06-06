@@ -88,12 +88,16 @@ function checkHabit(id) {
 }
 
 function deleteHabit(id) {
-    habits = habits.filter(h => h.id !== id);
-    
-    saveHabits();
-    renderHabits();
-    
-    infoToast('Habit deleted');
+    const itemEl = document.querySelector(`.item[data-id="${id}"]`);
+    if (itemEl && !itemEl.classList.contains('exiting')) {
+        itemEl.classList.add('exiting');
+        infoToast('Habit deleted');
+        setTimeout(() => {
+            habits = habits.filter(h => h.id !== id);
+            saveHabits();
+            renderHabits();
+        }, 270);
+    }
 }
 
 let editingHabitId = null;  
@@ -195,7 +199,7 @@ function renderHabits() {
 
         return `
             <div class="habit-wrapper">
-                <div class="item habit-item ${isCheckedToday ? 'completed' : ''}">
+                <div class="item habit-item ${isCheckedToday ? 'completed' : ''}" data-id="${habit.id}">
                     <input
                         type="checkbox"
                         class="item-checkbox"
@@ -225,7 +229,12 @@ function renderHabits() {
     }).join('');
     
     habitsList.innerHTML = habitsHTML;
-    
+
+    // Stagger chalk-write-in animation delays
+    habitsList.querySelectorAll('.item').forEach((el, i) => {
+        el.style.animationDelay = `${Math.min(i * 50, 500)}ms`;
+    });
+
     updateHabitStats();
 }
 
@@ -272,6 +281,7 @@ function buildHeatmapHTML(habit) {
     let cellsHTML = '';
     const current = new Date(startDate);
     let completionCount = 0;
+    let cellIndex = 0;
 
     while (current <= today) {
         const dateStr = current.toDateString();
@@ -285,7 +295,8 @@ function buildHeatmapHTML(habit) {
         if (isToday) classes.push('today');
 
         const tooltipDate = current.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        cellsHTML += `<div class="${classes.join(' ')}" title="${tooltipDate}${isCompleted ? ' ✓' : ''}"></div>`;
+        cellsHTML += `<div class="${classes.join(' ')}" title="${tooltipDate}${isCompleted ? ' ✓' : ''}" style="animation-delay:${cellIndex * 8}ms"></div>`;
+        cellIndex++;
 
         current.setDate(current.getDate() + 1);
     }
