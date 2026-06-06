@@ -1308,14 +1308,13 @@ body.dark-theme .dashboard-toggle-btn:hover {
 
 /* Dashboard Panel */
 .dashboard-panel {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    margin-bottom: 0;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease, margin-bottom 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     background: rgba(255, 255, 255, 0.5);
     border-radius: 12px;
-    transition: all 0.4s ease;
     border: 2px solid transparent;
+    overflow: hidden;
 }
 
 body.dark-theme .dashboard-panel {
@@ -1323,10 +1322,8 @@ body.dark-theme .dashboard-panel {
 }
 
 .dashboard-panel.open {
-    max-height: 2000px;
-    opacity: 1;
+    grid-template-rows: 1fr;
     margin-bottom: 25px;
-    padding: 25px;
     border-color: #9b59b6;
     box-shadow: 0 8px 25px rgba(155, 89, 182, 0.2);
 }
@@ -1334,6 +1331,17 @@ body.dark-theme .dashboard-panel {
 body.dark-theme .dashboard-panel.open {
     border-color: var(--text-secondary);
     box-shadow: 0 8px 25px rgba(232, 232, 208, 0.1);
+}
+
+.dashboard-panel-inner {
+    min-height: 0;
+    overflow: hidden;
+    padding: 0;
+    transition: padding 0.3s ease 0.05s;
+}
+
+.dashboard-panel.open .dashboard-panel-inner {
+    padding: 25px;
 }
 
 /* Dashboard Header */
