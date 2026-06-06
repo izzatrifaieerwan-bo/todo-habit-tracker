@@ -1,22 +1,4 @@
 # Classroom Whiteboard - Task & Habit Tracker
-![Whiteboard Overview](assets/whiteboard-overview-light.png)
-*Light mode - Classic whiteboard with colorful markers*
-
-![Chalkboard Overview](assets/chalkboard-overview-dark.png)
-*Dark mode - Cozy chalkboard theme for nighttime productivity*
-
-![Statistics Dashboard](assets/dashboard-charts-light.png)
-*Interactive statistics dashboard with real-time charts*
-
-![Dashboard Dark Mode](assets/dashboard-charts-dark.png)
-*Dashboard in chalkboard theme*
-
-![Drag and Drop](assets/drag-drop-feature.png)
-*Manual task reordering with drag and drop*
-
-![Features Showcase](assets/features-showcase-light.png)
-*Search, filtering, and overdue detection in action*
-
 ---
 
 ## Key Features
@@ -123,7 +105,7 @@
 ### Option 1: Clone Repository
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR-USERNAME/todo-habit-tracker.git
+git clone https://github.com/izzatrifaieerwan-bo/todo-habit-tracker.git
 
 # Navigate to project directory
 cd todo-habit-tracker
@@ -168,5 +150,4 @@ All data is stored locally in your browser using the LocalStorage API:
 
 **Live Demo:** [https://izzatrifaieerwan-bo.github.io/todo-habit-tracker](https://izzatrifaieerwan-bo.github.io/todo-habit-tracker)
 
-**Last Updated:** [27/10/2025]
-```
+**Last Updated:** 2026-06-06``
