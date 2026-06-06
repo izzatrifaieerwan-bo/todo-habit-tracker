@@ -358,11 +358,12 @@ header {
 }
 
 .section-title {
-    font-size: 2.8em;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
     font-weight: 700;
     color: var(--text-color);
     margin: 0;
-    font-family: 'Caveat', cursive;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
     position: relative;
     display: inline-block;
     transition: color 0.6s ease;
@@ -430,16 +431,16 @@ body.dark-theme #habits-section .section-title::after {
     font-size: 1.4em;
     font-weight: 700;
     margin: 0;
-    font-family: 'Caveat', cursive;
+    font-family: 'Space Grotesk', sans-serif;
     transition: color 0.6s ease;
 }
 
 .stat-label {
-    font-size: 1em;
-    font-weight: 400;
-    text-transform: none;
-    letter-spacing: 0;
-    font-family: 'Caveat', cursive;
+    font-size: 0.7em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'Space Grotesk', sans-serif;
     color: var(--text-secondary);
     transition: color 0.6s ease;
 }
@@ -544,25 +545,29 @@ body.dark-theme .search-input:focus {
 }
 
 .filter-label {
-    font-size: 1.1em;
+    font-size: 0.75em;
     color: var(--text-secondary);
-    font-weight: 600;
-    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     margin-right: 5px;
     transition: color 0.6s ease;
 }
 
 .category-filter-btn {
-    padding: 6px 14px;
+    padding: 5px 12px;
     background: rgba(74, 144, 226, 0.1);
     color: #4A90E2;
     border: 2px solid #4A90E2;
     border-radius: 20px;
-    font-size: 0.95em;
-    font-weight: 600;
+    font-size: 0.72em;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Caveat', cursive;
+    transition: all 0.15s cubic-bezier(0.22, 1, 0.36, 1);
     box-shadow: none;
 }
 
@@ -773,11 +778,13 @@ button {
     color: white;
     border: none;
     border-radius: 6px;
-    font-size: 1.1em;
+    font-size: 0.9em;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'Caveat', cursive;
+    transition: all 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     box-shadow: 0 3px 8px rgba(74, 144, 226, 0.3);
 }
 
@@ -785,6 +792,7 @@ button:hover {
     background: #357ABD;
     transform: translateY(-2px);
     box-shadow: 0 5px 12px rgba(74, 144, 226, 0.4);
+    transition: all 0.15s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 button:active {
@@ -1336,10 +1344,11 @@ body.dark-theme .dashboard-header {
 }
 
 .dashboard-header h3 {
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: 700;
     color: var(--text-color);
-    font-family: 'Caveat', cursive;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
     margin: 0;
 }
 
@@ -1373,10 +1382,12 @@ body.dark-theme .chart-container:hover {
 }
 
 .chart-container h4 {
-    font-size: 1.4em;
-    font-weight: 600;
+    font-size: 0.85em;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--text-color);
-    font-family: 'Caveat', cursive;
     margin: 0 0 15px 0;
     text-align: center;
 }
@@ -1432,10 +1443,12 @@ body.dark-theme .drag-toggle-container.active {
 
 .drag-toggle-label {
     flex: 1;
-    font-size: 1.1em;
-    font-weight: 600;
+    font-size: 0.85em;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--text-color);
-    font-family: 'Caveat', cursive;
     display: flex;
     align-items: center;
     gap: 8px;
