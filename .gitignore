@@ -125,6 +125,9 @@ dist
 # Playwright MCP artifacts
 .playwright-mcp/
 
+# Superpowers brainstorm sessions
+.superpowers/
+
 # yarn v2
 .yarn/cache
 .yarn/unplugged
